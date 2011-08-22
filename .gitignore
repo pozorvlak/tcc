@@ -1,0 +1,4 @@
+.redo/
+bin/tcc
+ignore_me.s
+a.out
