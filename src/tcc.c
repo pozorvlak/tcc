@@ -31,14 +31,17 @@ int fcall(int succeeded, char *error_msg, int exit_code)
 
 int main(char argc, char** argv)
 {
-	FILE *sfile;
+	FILE *cfile, *sfile;
 	
+	fcall(argc == 2, "I can only handle one argument for now", 3);
+	cfile = fopen(argv[1], "r");
+	fcall((int) cfile, "Couldn't open input file", 4);
 	fcall((int) (sfile = fopen(SFILE_NAME, "w")),
-		"Couldn't open input file", 1);
+		"Couldn't open output file", 1);
 	fprintf(sfile, "%s", asm_boilerplate_start);
 	fprintf(sfile, "%s", "\tmovl\t$0,\t\%eax\n");
 	fprintf(sfile, "%s", asm_boilerplate_end);
-	fcall(!fclose(sfile), "Couldn't close input file", 2);
+	fcall(!fclose(sfile), "Couldn't close output file", 2);
 	return 0;
 }
 
