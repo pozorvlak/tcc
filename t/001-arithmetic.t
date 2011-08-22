@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More 'no_plan';
+use Test::More;
 
 sub retval_ok {
 	my $infile = shift;
