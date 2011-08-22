@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 
 #define SFILE_NAME "ignore_me.s"
-
-extern int errno;
 
 int fcall(int succeeded, char *error_msg, int exit_code)
 {
@@ -20,6 +19,7 @@ int main(char argc, char** argv)
 	sfile = fopen(SFILE_NAME, "w");
 	fcall((int) sfile, "Couldn't open input file", 1);
 	fprintf(sfile, "Hello, world!\n");
-	fcall(fclose(sfile), "Couldn't close input file", 2);
+	fcall(!fclose(sfile), "Couldn't close input file", 2);
+	fclose(sfile);
 }
 
