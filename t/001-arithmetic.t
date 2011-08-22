@@ -16,6 +16,7 @@ sub retval_ok {
 		}
 	}
 	is(system("tcc", $infile), 0, "$testname compiled successfully");
+	is(system("as", "ignore_me.s"), 0, "$testname assembled successfully");
 	is(system("./a.out"), $retval, $testname);
 }
 
