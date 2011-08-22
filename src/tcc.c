@@ -3,15 +3,16 @@
 #include <errno.h>
 
 #define SFILE_NAME "ignore_me.s"
-char *asm_boilerplate =
+char *asm_boilerplate_start =
 "	.file	\"zero.c\"\n"
 "	.text\n"
 ".globl main\n"
 "	.type	main, @function\n"
 "main:\n"
 "	pushl	\%ebp\n"
-"	movl	\%esp, \%ebp\n"
-"	movl	$0, \%eax\n"
+"	movl	\%esp, \%ebp\n";
+
+char *asm_boilerplate_end = 
 "	popl	\%ebp\n"
 "	ret\n"
 "	.size	main, .-main\n"
@@ -34,7 +35,9 @@ int main(char argc, char** argv)
 	
 	fcall((int) (sfile = fopen(SFILE_NAME, "w")),
 		"Couldn't open input file", 1);
-	fprintf(sfile, "%s", asm_boilerplate);
+	fprintf(sfile, "%s", asm_boilerplate_start);
+	fprintf(sfile, "%s", "\tmovl\t$0,\t\%eax\n");
+	fprintf(sfile, "%s", asm_boilerplate_end);
 	fcall(!fclose(sfile), "Couldn't close input file", 2);
 	return 0;
 }
