@@ -4,6 +4,10 @@ use strict;
 use warnings;
 use Test::More;
 
+sub retval {
+	return system(@_) >> 8;
+}
+
 sub retval_ok {
 	my $infile = shift;
 	(my $testname = $infile) =~ s/.in$//;
@@ -15,9 +19,9 @@ sub retval_ok {
 			last;
 		}
 	}
-	is(system("bin/tcc", $infile), 0, "$testname compiled successfully");
-	is(system("gcc", "ignore_me.s"), 0, "$testname assembled successfully");
-	is(system("./a.out"), $retval, $testname);
+	is(retval("bin/tcc", $infile), 0, "$testname compiled successfully");
+	is(retval("gcc", "ignore_me.s"), 0, "$testname assembled successfully");
+	is(retval("./a.out"), $retval, $testname);
 }
 
 for my $test (glob("t/001-arithmetic/*.in")) {
