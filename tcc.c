@@ -16,8 +16,9 @@ int fcall(int succeeded, char *error_msg, int exit_code)
 int main(char argc, char** argv)
 {
 	FILE *sfile;
-	sfile = fopen(SFILE_NAME, "w");
-	fcall((int) sfile, "Couldn't open input file", 1);
+	
+	fcall((int) (sfile = fopen(SFILE_NAME, "w")),
+		"Couldn't open input file", 1);
 	fprintf(sfile, "Hello, world!\n");
 	fcall(!fclose(sfile), "Couldn't close input file", 2);
 	return 0;
