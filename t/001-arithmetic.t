@@ -19,7 +19,7 @@ sub retval_ok {
 	is(system("./a.out"), $retval, $testname);
 }
 
-for my $test (glob("001-integer-arithmetic/*.in")) {
+for my $test (glob("t/001-arithmetic/*.in")) {
 	retval_ok($test);
 }
 
