@@ -20,6 +20,6 @@ int main(char argc, char** argv)
 	fcall((int) sfile, "Couldn't open input file", 1);
 	fprintf(sfile, "Hello, world!\n");
 	fcall(!fclose(sfile), "Couldn't close input file", 2);
-	fclose(sfile);
+	return 0;
 }
 
