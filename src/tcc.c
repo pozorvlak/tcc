@@ -4,7 +4,6 @@
 #include <string.h>
 #include "lexer.h"
 
-#define SFILE_NAME "ignore_me.s"
 char *asm_boilerplate_start =
 "	.file	\"zero.c\"\n"
 "	.text\n"

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "lexer.h"
 
 int read_integer(FILE *stream)
 {
