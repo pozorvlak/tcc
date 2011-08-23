@@ -1,4 +1,4 @@
-SRC=../src
-SRCS=$SRC/tcc.c
-redo-ifchange $SRCS
-gcc -o $3 $SRCS
+OBJ=../obj
+OBJS="$OBJ/lexer.o $OBJ/tcc.o"
+redo-ifchange $OBJS
+gcc -o $3 $OBJS

@@ -1,4 +1,6 @@
 .redo/
 bin/tcc
-ignore_me.s
+*.s
+*.o
+*.d
 a.out
