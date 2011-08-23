@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "lexer.h"
+#include "parser.h"
 #include "die.h"
 
 char *asm_boilerplate_start =
@@ -44,8 +44,7 @@ char *get_sfile_name(const char *cfile_name)
 void compile(FILE *cfile, FILE *sfile)
 {
 	fprintf(sfile, "%s", asm_boilerplate_start);
-	get_token(cfile);
-	int retval = literal;
+	int retval = expression(cfile);
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
 	fprintf(sfile, "%s", asm_boilerplate_end);
 }
