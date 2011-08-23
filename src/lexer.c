@@ -10,8 +10,8 @@ int read_integer(FILE *stream)
 	int c;
 	int found_integer = 0;
 	while (c = fgetc(stream)) {
-		found_integer = 1;
 		if (isdigit(c)) {
+			found_integer = 1;
 			i *= 10;
 			i += (c - '0');
 		} else {
