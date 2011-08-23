@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <errno.h>
+#include <string.h>
 
 #define SFILE_NAME "ignore_me.s"
 char *asm_boilerplate_start =
@@ -72,16 +73,35 @@ void read_whitespace(FILE *stream)
 	}
 }
 
+/**
+ * Given the name of a source file, return the name of the corresponding
+ * assembly (.s) file.
+ */
+char *get_sfile_name(const char *cfile_name)
+{
+	int length = strlen(cfile_name);
+	char *sfile_name = calloc(length + 3, sizeof(char));
+	or_die(sfile_name != NULL, "Out of memory", 3);
+	if ((cfile_name[length-1] == 'c') && (cfile_name[length-2] == '.')) {
+		length -= 2;
+	}
+	strncpy(sfile_name, cfile_name, length * sizeof(char));
+	strncpy(sfile_name + length, ".s", 2 * sizeof(char));
+	return sfile_name;
+}
+
 int main(char argc, char** argv)
 {
 	FILE *cfile, *sfile;
 	
 	or_die(argc == 2, "I can only handle one argument for now", 3);
-	cfile = fopen(argv[1], "r");
+	char *cfile_name = argv[1];
+	cfile = fopen(cfile_name, "r");
 	or_die((int) cfile, "Couldn't open input file", 4);
 	read_whitespace(cfile);
 	int retval = read_integer(cfile);
-	or_die((int) (sfile = fopen(SFILE_NAME, "w")),
+	char *sfile_name = get_sfile_name(cfile_name);
+	or_die((int) (sfile = fopen(sfile_name, "w")),
 		"Couldn't open output file", 1);
 	fprintf(sfile, "%s", asm_boilerplate_start);
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);

@@ -8,6 +8,12 @@ sub retval {
 	return system(@_) >> 8;
 }
 
+sub sfile {
+	my $filename = shift;
+	$filename =~ s/(.c)?$/.s/;
+	return $filename;
+}
+
 sub retval_ok {
 	my $infile = shift;
 	(my $testname = $infile) =~ s/.in$//;
@@ -20,7 +26,7 @@ sub retval_ok {
 		}
 	}
 	is(retval("bin/tcc", $infile), 0, "$testname compiled successfully");
-	is(retval("gcc", "ignore_me.s"), 0, "$testname assembled successfully");
+	is(retval("gcc", sfile($infile)), 0, "$testname assembled successfully");
 	is(retval("./a.out"), $retval, $testname);
 }
 
