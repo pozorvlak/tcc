@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "lexer.h"
 
+token next_token;
+int literal;
+
 int read_integer(FILE *stream)
 {
 	int i = 0;
@@ -42,6 +45,13 @@ void read_whitespace(FILE *stream)
 			break;
 		}
 	}
+}
+
+void get_token(FILE *cfile)
+{
+	read_whitespace(cfile);
+	next_token = integer;
+	literal = read_integer(cfile);
 }
 
 

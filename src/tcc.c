@@ -52,9 +52,9 @@ char *get_sfile_name(const char *cfile_name)
  */
 void compile(FILE *cfile, FILE *sfile)
 {
-	read_whitespace(cfile);
-	int retval = read_integer(cfile);
 	fprintf(sfile, "%s", asm_boilerplate_start);
+	get_token(cfile);
+	int retval = literal;
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
 	fprintf(sfile, "%s", asm_boilerplate_end);
 }
