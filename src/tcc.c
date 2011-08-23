@@ -90,23 +90,34 @@ char *get_sfile_name(const char *cfile_name)
 	return sfile_name;
 }
 
-int main(char argc, char** argv)
+/**
+ * Compile the code in cfile, placing the assembly-language output in sfile.
+ */
+void compile(FILE *cfile, FILE *sfile)
 {
-	FILE *cfile, *sfile;
-	
-	or_die(argc == 2, "I can only handle one argument for now", 3);
-	char *cfile_name = argv[1];
-	cfile = fopen(cfile_name, "r");
-	or_die((int) cfile, "Couldn't open input file", 4);
 	read_whitespace(cfile);
 	int retval = read_integer(cfile);
-	char *sfile_name = get_sfile_name(cfile_name);
-	or_die((int) (sfile = fopen(sfile_name, "w")),
-		"Couldn't open output file", 1);
 	fprintf(sfile, "%s", asm_boilerplate_start);
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
 	fprintf(sfile, "%s", asm_boilerplate_end);
-	or_die(fclose(sfile) == 0, "Couldn't close output file", 2);
+}
+
+int main(char argc, char** argv)
+{
+	FILE *cfile, *sfile;
+	int i;
+	
+	for (i = 0; i < argc; i++) {
+		char *cfile_name = argv[i];
+		cfile = fopen(cfile_name, "r");
+		or_die((int) cfile, "Couldn't open input file", 4);
+		char *sfile_name = get_sfile_name(cfile_name);
+		or_die((int) (sfile = fopen(sfile_name, "w")),
+			"Couldn't open output file", 1);
+		free(sfile_name);
+		compile(cfile, sfile);
+		or_die(fclose(sfile) == 0, "Couldn't close output file", 2);
+	}
 	return 0;
 }
 
