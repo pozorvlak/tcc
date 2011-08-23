@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <errno.h>
 #include <string.h>
 #include "lexer.h"
+#include "die.h"
 
 char *asm_boilerplate_start =
 "	.file	\"zero.c\"\n"
@@ -20,15 +20,6 @@ char *asm_boilerplate_end =
 "	.ident	\"TCC 0.0.1\"\n"
 "	.section	.note.GNU-stack,\"\",@progbits\n"
 ;
-
-int or_die(int succeeded, char *error_msg, int exit_code)
-{
-	if (!succeeded) {
-		fprintf(stderr, "ERROR: %s, code %i\n", error_msg, errno);
-		exit(exit_code);
-	}
-	return succeeded;
-}
 
 /**
  * Given the name of a source file, return the name of the corresponding
