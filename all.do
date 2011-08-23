@@ -1,2 +1,1 @@
-redo-ifchange bin/tcc
-prove
+redo-ifchange test

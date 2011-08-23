@@ -20,7 +20,7 @@ char *asm_boilerplate_end =
 "	.section	.note.GNU-stack,\"\",@progbits\n"
 ;
 
-int fcall(int succeeded, char *error_msg, int exit_code)
+int or_die(int succeeded, char *error_msg, int exit_code)
 {
 	if (!succeeded) {
 		fprintf(stderr, "ERROR: %s, code %i\n", error_msg, errno);
@@ -76,17 +76,17 @@ int main(char argc, char** argv)
 {
 	FILE *cfile, *sfile;
 	
-	fcall(argc == 2, "I can only handle one argument for now", 3);
+	or_die(argc == 2, "I can only handle one argument for now", 3);
 	cfile = fopen(argv[1], "r");
-	fcall((int) cfile, "Couldn't open input file", 4);
+	or_die((int) cfile, "Couldn't open input file", 4);
 	read_whitespace(cfile);
 	int retval = read_integer(cfile);
-	fcall((int) (sfile = fopen(SFILE_NAME, "w")),
+	or_die((int) (sfile = fopen(SFILE_NAME, "w")),
 		"Couldn't open output file", 1);
 	fprintf(sfile, "%s", asm_boilerplate_start);
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
 	fprintf(sfile, "%s", asm_boilerplate_end);
-	fcall(!fclose(sfile), "Couldn't close output file", 2);
+	or_die(fclose(sfile) == 0, "Couldn't close output file", 2);
 	return 0;
 }
 
