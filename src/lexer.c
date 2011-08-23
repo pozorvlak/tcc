@@ -8,7 +8,9 @@ int read_integer(FILE *stream)
 {
 	int i = 0;
 	int c;
+	int found_integer = 0;
 	while (c = fgetc(stream)) {
+		found_integer = 1;
 		if (isdigit(c)) {
 			i *= 10;
 			i += (c - '0');
@@ -17,7 +19,10 @@ int read_integer(FILE *stream)
 			break;
 		}
 	}
-	return i;
+	if (found_integer) {
+		literal = i;
+	}
+	return found_integer;
 }
 
 void discard_line(FILE *stream)
@@ -47,11 +52,26 @@ void read_whitespace(FILE *stream)
 	}
 }
 
-void get_token(FILE *cfile)
+/* Read the next token from stream. Puts the next token in next_token. */
+void get_token(FILE *stream)
 {
-	read_whitespace(cfile);
-	next_token = integer;
-	literal = read_integer(cfile);
+	read_whitespace(stream);
+	if (read_integer(stream)) {
+		next_token = integer;
+	} else {
+		int c;	
+		c = fgetc(stream);
+		switch (c) {
+			case '+' : next_token = plus; break;
+			case '-' : next_token = minus; break;
+			case '*' : next_token = times; break;
+			case '/' : next_token = divide; break;
+			case '{' : next_token = open_brace; break;
+			case '}' : next_token = close_brace; break;
+			case '(' : next_token = open_paren; break;
+			case ')' : next_token = close_paren; break;
+		}
+	}
 }
 
 
