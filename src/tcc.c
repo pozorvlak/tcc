@@ -85,7 +85,6 @@ int main(char argc, char** argv)
 		"Couldn't open output file", 1);
 	fprintf(sfile, "%s", asm_boilerplate_start);
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
-	printf("\tmovl\t$%d,\t%%eax\n", retval);
 	fprintf(sfile, "%s", asm_boilerplate_end);
 	fcall(!fclose(sfile), "Couldn't close output file", 2);
 	return 0;
