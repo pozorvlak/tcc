@@ -68,10 +68,10 @@ int main(char argc, char** argv)
 	for (i = 0; i < argc; i++) {
 		char *cfile_name = argv[i];
 		cfile = fopen(cfile_name, "r");
-		or_die((int) cfile, "Couldn't open input file", 4);
+		or_die(cfile != NULL, "Couldn't open input file", 4);
 		char *sfile_name = get_sfile_name(cfile_name);
-		or_die((int) (sfile = fopen(sfile_name, "w")),
-			"Couldn't open output file", 1);
+		sfile = fopen(sfile_name, "w");
+		or_die(sfile != NULL, "Couldn't open output file", 1);
 		free(sfile_name);
 		compile(cfile, sfile);
 		or_die(fclose(sfile) == 0, "Couldn't close output file", 2);
