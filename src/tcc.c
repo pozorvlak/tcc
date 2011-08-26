@@ -54,7 +54,7 @@ int main(char argc, char** argv)
 	FILE *cfile, *sfile;
 	int i;
 	
-	for (i = 0; i < argc; i++) {
+	for (i = 1; i < argc; i++) {
 		char *cfile_name = argv[i];
 		cfile = fopen(cfile_name, "r");
 		or_die(cfile != NULL, "Couldn't open input file", 4);
