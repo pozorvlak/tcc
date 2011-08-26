@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include "lexer.h"
+#include "die.h"
 
-token next_token;
+token next_token = dummy;
 int literal;
 
 int read_integer(FILE *stream)

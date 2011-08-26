@@ -4,6 +4,12 @@
 
 int accept(FILE *stream, token tok)
 {
+	printf("Next token is %d\n", next_token);
+	if (next_token == dummy) {
+		/* First token has not yet been read - read it! */
+		get_token(stream);
+	}
+	printf("Next token is %d\n", next_token);
 	if (next_token == tok) {
 		get_token(stream);
 		return 1;
