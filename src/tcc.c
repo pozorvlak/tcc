@@ -3,6 +3,7 @@
 #include <string.h>
 #include "parser.h"
 #include "die.h"
+#include "options.h"
 
 char *asm_boilerplate_start =
 "	.file	\"zero.c\"\n"
@@ -20,6 +21,8 @@ char *asm_boilerplate_end =
 "	.ident	\"TCC 0.0.1\"\n"
 "	.section	.note.GNU-stack,\"\",@progbits\n"
 ;
+
+int verbose = 0;
 
 /**
  * Given the name of a source file, return the name of the corresponding

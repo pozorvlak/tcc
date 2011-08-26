@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "lexer.h"
 #include "die.h"
+#include "options.h"
 
 token next_token = dummy;
 int literal;
@@ -21,7 +22,7 @@ int read_integer(FILE *stream)
 		}
 	}
 	if (found_integer) {
-		printf("Found integer! %d\n", i);
+		if (verbose) printf("Found integer! %d\n", i);
 		literal = i;
 	}
 	return found_integer;
@@ -39,7 +40,7 @@ void read_whitespace(FILE *stream)
 {
 	int c;
 	while ((c = fgetc(stream)) != EOF) {
-		printf("Reading whitespace: saw char %lc\n", c);
+		if (verbose) printf("Reading whitespace: saw char %lc\n", c);
 		if (c == '/') {
 			int c2 = fgetc(stream);
 			if (c2 == '/') {
@@ -58,15 +59,15 @@ void read_whitespace(FILE *stream)
 /* Read the next token from stream. Puts the next token in next_token. */
 void get_token(FILE *stream)
 {
-	printf("get_token\n");
+	if (verbose) printf("get_token\n");
 	read_whitespace(stream);
 	if (read_integer(stream)) {
-		printf("Successfully read an integer, namely %d\n", literal);
+		if (verbose) printf("Successfully read integer %d\n", literal);
 		next_token = integer;
 	} else {
 		int c;	
 		c = fgetc(stream);
-		printf("Saw character %c\n", c);
+		if (verbose) printf("Saw character %c\n", c);
 		switch (c) {
 			case EOF: break;
 			case '+' : next_token = plus; break;
