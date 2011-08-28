@@ -1,5 +1,5 @@
 use Modern::Perl;
-use Test::More;
+use Test::More skip_all => 'overflow testing not yet implemented';
 use Test::TCC 'comp_fail_ok';
 
 for my $infile (glob("t/003-cfail/*.in")) {
