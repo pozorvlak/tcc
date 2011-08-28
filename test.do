@@ -1,4 +1,4 @@
 redo-ifchange bin/tcc
 redo-ifchange t/*
 redo-ifchange t/*/*
-prove >&2
+prove -l >&2
