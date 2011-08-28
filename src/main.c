@@ -5,22 +5,21 @@
 #include "die.h"
 #include "options.h"
 
-char *asm_boilerplate_start =
-"	.file	\"zero.c\"\n"
-"	.text\n"
-".globl main\n"
-"	.type	main, @function\n"
-"main:\n"
-"	pushl	\%ebp\n"
-"	movl	\%esp, \%ebp\n";
+#define ASM_BOILERPLATE_START \
+"	.file	\"%s\"\n" \
+"	.text\n" \
+".globl main\n" \
+"	.type	main, @function\n" \
+"main:\n" \
+"	pushl	%%ebp\n" \
+"	movl	%%esp, %%ebp\n" \
 
-char *asm_boilerplate_end = 
-"	popl	\%ebp\n"
-"	ret\n"
-"	.size	main, .-main\n"
-"	.ident	\"TCC 0.0.1\"\n"
-"	.section	.note.GNU-stack,\"\",@progbits\n"
-;
+#define ASM_BOILERPLATE_END \
+"	popl	%%ebp\n"\
+"	ret\n"\
+"	.size	main, .-main\n"\
+"	.ident	\"TCC 0.0.1\"\n"\
+"	.section	.note.GNU-stack,\"\",@progbits\n"\
 
 int verbose = 0;
 
@@ -44,12 +43,12 @@ char *get_sfile_name(const char *cfile_name)
 /**
  * Compile the code in cfile, placing the assembly-language output in sfile.
  */
-void compile(FILE *cfile, FILE *sfile)
+void compile(FILE *cfile, FILE *sfile, char* cfile_name)
 {
-	fprintf(sfile, "%s", asm_boilerplate_start);
+	fprintf(sfile, ASM_BOILERPLATE_START, cfile_name);
 	int retval = expression(cfile);
 	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
-	fprintf(sfile, "%s", asm_boilerplate_end);
+	fprintf(sfile, ASM_BOILERPLATE_END);
 }
 
 int main(char argc, char** argv)
@@ -65,7 +64,7 @@ int main(char argc, char** argv)
 		sfile = fopen(sfile_name, "w");
 		or_die(sfile != NULL, "Couldn't open output file", 1);
 		free(sfile_name);
-		compile(cfile, sfile);
+		compile(cfile, sfile, cfile_name);
 		or_die(fclose(sfile) == 0, "Couldn't close output file", 2);
 	}
 	return 0;
