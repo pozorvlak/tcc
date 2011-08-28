@@ -1,1 +1,16 @@
 There are millions of toy compilers in the world. This one is mine.
+
+INSTRUCTIONS
+
+If you have redo installed (http://github.com/apenwarr/redo) then you can build tcc and run the tests by typing
+
+    redo
+
+from the project root directory. If not, you can build tcc by typing
+
+    ./do bin/tcc
+
+but this does not support incremental builds. You may then run the tests by
+typing
+
+    prove -l
