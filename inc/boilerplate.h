@@ -31,13 +31,13 @@
 ".globl _main\n" \
 "_main:\n" \
 "LFB2:\n" \
-"       pushq   %rbp\n" \
+"       pushq   %%rbp\n" \
 "LCFI0:\n" \
-"       movq    %rsp, %rbp\n" \
+"       movq    %%rsp, %%rbp\n" \
 "LCFI1:\n"
 
 #define ASM_RETURN_LINE \
-"       movl    $0, %eax\n" \
+"       movl    $0, %%eax\n" \
 "       leave\n" \
 "       ret\n"
 
@@ -50,7 +50,7 @@
 "LSCIE1:\n" \
 "       .long   0x0\n" \
 "       .byte   0x1\n" \
-"       .ascii "zR\0"\n" \
+"       .ascii \"zR\\0\"\n" \
 "       .byte   0x1\n" \
 "       .byte   0x78\n" \
 "       .byte   0x10\n" \
