@@ -3,10 +3,7 @@
 use strict;
 use warnings;
 use Test::More;
-
-sub retval {
-	return system(@_) >> 8;
-}
+use Test::TCC 'retval';
 
 sub sfile {
 	my $filename = shift;

@@ -2,7 +2,7 @@
 
 use Modern::Perl;
 use Test::More;
-use Test::TCC qw/comp_fail_ok/;
+use Test::TCC qw/comp_fail_ok retval/;
 use File::Spec::Functions;
 
 my $dir = "t/002-file-opening";
@@ -17,8 +17,7 @@ for my $sfile (@sfiles) {
 		unlink($sfile) or die "Couldn't delete $sfile: $!";
 	}
 }
-is(system("bin/tcc", @cfiles) >> 8, 0,
-	"Successfully opens existing files");
+is(retval("bin/tcc", @cfiles), 0, "Successfully opens existing files");
 for my $sfile (@sfiles) {
 	ok(-e $sfile, "Assembly file with correct name $sfile created");
 }
