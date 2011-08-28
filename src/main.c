@@ -4,22 +4,7 @@
 #include "parser.h"
 #include "die.h"
 #include "options.h"
-
-#define ASM_BOILERPLATE_START \
-"	.file	\"%s\"\n" \
-"	.text\n" \
-".globl main\n" \
-"	.type	main, @function\n" \
-"main:\n" \
-"	pushl	%%ebp\n" \
-"	movl	%%esp, %%ebp\n" \
-
-#define ASM_BOILERPLATE_END \
-"	popl	%%ebp\n"\
-"	ret\n"\
-"	.size	main, .-main\n"\
-"	.ident	\"TCC 0.0.1\"\n"\
-"	.section	.note.GNU-stack,\"\",@progbits\n"\
+#include "boilerplate.h"
 
 int verbose = 0;
 
@@ -47,7 +32,7 @@ void compile(FILE *cfile, FILE *sfile, char* cfile_name)
 {
 	fprintf(sfile, ASM_BOILERPLATE_START, cfile_name);
 	int retval = expression(cfile);
-	fprintf(sfile, "\tmovl\t$%d,\t%%eax\n", retval);
+	fprintf(sfile, ASM_RETURN_LINE, retval);
 	fprintf(sfile, ASM_BOILERPLATE_END);
 }
 
