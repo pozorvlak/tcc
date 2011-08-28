@@ -37,7 +37,7 @@
 "LCFI1:\n"
 
 #define ASM_RETURN_LINE \
-"       movl    $0, %%eax\n" \
+"       movl    $%d, %%eax\n" \
 "       leave\n" \
 "       ret\n"
 
