@@ -2,20 +2,12 @@
 
 use Modern::Perl;
 use Test::More;
-use Capture::Tiny 'capture';
+use Test::TCC qw/comp_fail_ok/;
 use File::Spec::Functions;
-use autodie;
-
-sub comp_fail_ok {
-    my ($system_args, $err_msg, $name) = @_;
-    my ($out, $err) = capture { system @$system_args };
-    ok $err =~ qr/$err_msg/, $name;
-}
 
 my $dir = "t/002-file-opening";
 
-comp_fail_ok(["bin/tcc", "doesnt_exist.c"],
-    "ERROR: Couldn't open input file, code 2", 
+comp_fail_ok(["doesnt_exist.c"], "ERROR: Couldn't open input file, code 2", 
     "Fail on loading nonexistent file");
 
 my @cfiles = map { catfile($dir, "test$_.c") } (1 .. 3);
