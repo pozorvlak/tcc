@@ -2,6 +2,9 @@ There are millions of toy compilers in the world. This one is mine.
 
 INSTRUCTIONS
 
+To run some of the unit tests, you will need Nik Clayton's libtap library
+installed. You can get it from http://github.com/pozorvlak/libtap.
+
 If you have redo installed (http://github.com/apenwarr/redo) then you can build tcc and run the tests by typing
 
     redo
