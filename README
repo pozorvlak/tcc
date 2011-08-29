@@ -9,11 +9,11 @@ If you have redo installed (http://github.com/apenwarr/redo) then you can build 
 
     redo
 
-from the project root directory. If not, you can build tcc by typing
-
-    ./do bin/tcc
-
-but this does not support incremental builds. You may then run the tests by
+from the project root directory. If not, you can build tcc and run the tests by
 typing
+
+    ./do
+
+but this does not support incremental builds. You may run the tests without rebuilding tcc by typing
 
     prove -l
