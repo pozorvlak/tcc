@@ -1,3 +1,3 @@
-gcc -ltap -I../../inc -MD -MF $1.d -o $3 $1.c
-read DEPS <$1.d
-redo-ifchange ${DEPS#*:}
+OBJS="test.o ../../obj/ir.o ../../obj/ir-list.o"
+redo-ifchange $OBJS
+gcc -ltap -o $3 $OBJS
