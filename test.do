@@ -1,4 +1,3 @@
 redo-ifchange bin/tcc
-redo-ifchange t/*
-redo-ifchange t/*/*
+redo-ifchange t/all
 prove -l >&2
