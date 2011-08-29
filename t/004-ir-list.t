@@ -1,3 +1,5 @@
-#!/bin/sh
+#!/usr/bin/perl
 
-t/004-ir-list/test
+use Modern::Perl;
+
+system("t/004-ir-list/test");
