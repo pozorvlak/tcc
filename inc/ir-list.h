@@ -18,7 +18,7 @@ typedef struct {
 ir_list *new_list();
 void push(ir_list *l, quad *q);
 int length(ir_list *l);
-void delete_node(ir_node* n);
+void delete_node(ir_list *l, ir_node* n);
 void delete_all(ir_list *l);
 
 #endif /* IR_LIST_H */

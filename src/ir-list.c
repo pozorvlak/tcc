@@ -42,14 +42,26 @@ int length(ir_list *l)
 	return len;
 }
 
-void delete_node(ir_node* n)
+void delete_node(ir_list *l, ir_node* n)
 {
+	assert(l != NULL);
 	assert(n != NULL);
 	ir_node *prev, *next;
 	prev = n->previous;
 	next = n->next;
-	prev->next = next;
-	next->previous = prev;
+	if (prev != NULL) {
+		prev->next = next;
+	} else {
+		assert(l->first == n);
+		l->first = next;
+	}
+	if (next != NULL) {
+		next->previous = prev;
+	} else {
+		assert(l->last == n);
+		l->last = prev;
+	}
+	free(n->value);
 	free(n);
 }
 
@@ -59,6 +71,7 @@ void delete_all(ir_list *l)
 	ir_node *n = l->first;
 	while (n != NULL) {
 		ir_node *next = n->next;
+		free(n->value);
 		free(n);
 		n = next;
 	}
